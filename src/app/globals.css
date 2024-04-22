@@ -1,0 +1,61 @@
+:root {
+  --bg-color-1: #fff3eb;
+  --bg-color-2: #e6faea;
+  --bg-color-3: #fdeeed;
+  --bg-color-4: #f5f5f7;
+
+  --correct-color: #47d867;
+  --wrong-color: #ec6259;
+  --inactive-color: #d0d0d8;
+
+  --text-active-color: #ff8b37;
+  --btn-active-color: #e87928;
+  --btn-hover-color: #ffac70;
+  --btn-base-color: #ff8b37;
+
+  --mobile-x-margin: 15px;
+  --mobile-height: 46px;
+}
+
+body {
+  height: 100vh;
+}
+
+h1 {
+  font-weight: 600;
+  font-size: 56px;
+}
+
+.btn {
+  padding: 20px 0px;
+  border: none;
+  background-color: var(--btn-base-color);
+  color: #fff;
+  border-radius: 10px;
+  min-width: 296px;
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  transition: background 0.2s;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 23.2px;
+  text-align: center;
+}
+
+.btn:hover {
+  background-color: var(--btn-hover-color);
+}
+
+.btn:active {
+  background-color: var(--btn-active-color);
+}
+
+@media screen and (max-width: 768px) {
+  .btn {
+    min-width: 288px;
+    padding: 16px 0px;
+    font-size: 14px;
+    line-height: 16.24px;
+  }
+}
