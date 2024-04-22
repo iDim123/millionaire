@@ -2,7 +2,7 @@
   {
     "id": 1,
     "question": "How old your elder brother was 10 years before you was born, mate?",
-    "options": ["London", "Paris", "Berlin", "Gora"],
+    "options": ["Paris", "Paris", "Berlin", "Berlin"],
     "answers": ["Paris"],
     "score": 500
   },

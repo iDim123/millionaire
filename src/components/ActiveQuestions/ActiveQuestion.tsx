@@ -12,6 +12,7 @@ import {
   getCorrectAnswerIndexes,
   getNextQuestionId,
 } from '@/src/components/ActiveQuestions/utils';
+import { setActiveQuestionId } from '@/src/lib/actions';
 
 const ABC = ['A', 'B', 'C', 'D'];
 const DELAY = 200;
@@ -20,7 +21,6 @@ interface Props {
   activeQuestionId: number;
   questions: Question[];
   isShowQuestion: boolean;
-  setActiveQuestion: (id: number) => void;
 }
 
 export default function ActiveQuestion(props: Props) {
@@ -28,7 +28,7 @@ export default function ActiveQuestion(props: Props) {
     activeQuestionId,
     questions,
     isShowQuestion,
-    setActiveQuestion: setActiveQuestionId,
+    // setActiveQuestion: setActiveQuestionId,
   } = props;
   const router = useRouter();
   const [correctIndex, setCorrectIndex] = useState<number[]>([]);
@@ -69,7 +69,8 @@ export default function ActiveQuestion(props: Props) {
       } else {
         await fetchSetActiveQuestionId(nextQuestionId);
         await delay(DELAY);
-        setActiveQuestionId(nextQuestionId);
+        await setActiveQuestionId(nextQuestionId);
+        // setActiveQuestionId(nextQuestionId);
       }
     } else {
       setWrongIndex(index);
