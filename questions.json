@@ -1,0 +1,114 @@
+[
+  {
+    "id": 1,
+    "question": "How old your elder brother was 10 years before you was born, mate?",
+    "options": [
+      "Paris wdjlk kalj ajdkla jd lajdl ldjaslkjdlkasjd jlkj",
+      "Paris",
+      "Berlin",
+      "Berlin"
+    ],
+    "answers": ["Paris wdjlk kalj ajdkla jd lajdl ldjaslkjdlkasjd jlkj"],
+    "score": 500
+  },
+  {
+    "id": 2,
+    "question": "Who wrote 'To Kill a Mockingbird'?",
+    "options": [
+      "Harper Lee",
+      "F. Scott Fitzgerald",
+      "Mark Twain",
+      "J.K. Rowling"
+    ],
+    "answers": ["Harper Lee", "J.K. Rowling"]
+  },
+  {
+    "id": 3,
+    "question": "Which planet is known as the Red Planet?",
+    "options": ["Venus", "Mars", "Jupiter", "Mercury"],
+    "answers": ["Mars"]
+  },
+  {
+    "id": 4,
+    "question": "What is the chemical symbol for water?",
+    "options": ["H2O", "CO2", "O2", "NaCl"],
+    "answers": ["H2O"],
+    "score": 4000
+  },
+  {
+    "id": 5,
+    "question": "Who painted the Mona Lisa?",
+    "options": [
+      "Vincent van Gogh",
+      "Pablo Picasso",
+      "Leonardo da Vinci",
+      "Michelangelo"
+    ],
+    "answers": ["Leonardo da Vinci"],
+    "score": 8000
+  },
+  {
+    "id": 6,
+    "question": "Which planet is known as the Red Planet?",
+    "options": ["Venus", "Mars", "Jupiter", "Mercury"],
+    "answers": ["Mars"],
+    "score": 16000
+  },
+  {
+    "id": 7,
+    "question": "What is the chemical symbol for water?",
+    "options": ["H2O", "CO2", "O2", "NaCl"],
+    "answers": ["H2O"],
+    "score": 32000
+  },
+  {
+    "id": 8,
+    "question": "Who painted the Mona Lisa?",
+    "options": [
+      "Vincent van Gogh",
+      "Pablo Picasso",
+      "Leonardo da Vinci",
+      "Michelangelo"
+    ],
+    "answers": ["Leonardo da Vinci"],
+    "score": 64000
+  },
+  {
+    "id": 9,
+    "question": "Which planet is known as the Red Planet?",
+    "options": ["Venus", "Mars", "Jupiter", "Mercury"],
+    "answers": ["Mars"],
+    "score": 125000
+  },
+  {
+    "id": 10,
+    "question": "What is the chemical symbol for water?",
+    "options": ["H2O", "CO2", "O2", "NaCl"],
+    "answers": ["H2O"],
+    "score": 250000
+  },
+  {
+    "id": 11,
+    "question": "Who painted the Mona Lisa?",
+    "options": [
+      "Vincent van Gogh",
+      "Pablo Picasso",
+      "Leonardo da Vinci",
+      "Michelangelo"
+    ],
+    "answers": ["Leonardo da Vinci"],
+    "score": 500000
+  },
+  {
+    "id": 12,
+    "question": "Who painted the Mona Lisa?",
+    "options": [
+      "Vincent van Gogh",
+      "Pablo Picasso",
+      "Leonardo da Vinci",
+      "Michelangelo"
+    ],
+    "answers": ["Leonardo da Vinci"],
+    "score": 1000000
+  }
+]
