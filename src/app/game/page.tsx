@@ -1,54 +1,25 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import ScoreList from '@/src/components/ScoreList/ScoreList';
-import ActiveQuestion from '@/src/components/ActiveQuestions/ActiveQuestion';
 import styles from './page.module.css';
-import { fetchGetActiveQuestionId, fetchQuestions } from '@/src/api/api';
-import { Question } from '@/src/models';
 import MobileHeader from '@/src/components/Header';
+import ActiveQuestion from '@/src/components/ActiveQuestion/ActiveQuestion';
+import QuestionsList from '@/src/components/QuestionsList/QuestionsList';
+import { fetchQuestions } from '@/src/api/api';
 
-export default function Game() {
-  const [isShowQuestion, setIsShowQuestion] = useState(true);
-  const [activeQuestionId, setActiveQuestionId] = useState<
-    number | undefined
-  >();
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [isLoading, setLoading] = useState(true);
+interface Props {
+  searchParams: {
+    questionId: string | undefined;
+    showQuestion: string | undefined;
+  };
+}
 
-  useEffect(() => {
-    setLoading(true);
-    Promise.all([fetchQuestions(), fetchGetActiveQuestionId()]).then(
-      ([data, id]) => {
-        setQuestions(data);
-        setActiveQuestionId(id);
-        setLoading(false);
-      },
-    );
-  }, []);
+export default async function Game(props: Props) {
+  const { searchParams } = props;
+  const questions = await fetchQuestions();
 
   return (
     <main className={styles.container}>
-      <MobileHeader
-        isShowQuestion={isShowQuestion}
-        setIsShowQuestion={setIsShowQuestion}
-      />
-      {isLoading && <div>Loading...</div>}
-      {activeQuestionId !== undefined && (
-        <>
-          <ActiveQuestion
-            isShowQuestion={isShowQuestion}
-            activeQuestionId={activeQuestionId}
-            questions={questions}
-            setActiveQuestion={setActiveQuestionId}
-          />
-          <ScoreList
-            isShowQuestion={isShowQuestion}
-            activeQuestionId={activeQuestionId}
-            questions={questions}
-          />
-        </>
-      )}
+      <MobileHeader showQuestion={searchParams.showQuestion} />
+      <ActiveQuestion questions={questions} />
+      <QuestionsList questions={questions} searchParams={searchParams} />
     </main>
   );
 }

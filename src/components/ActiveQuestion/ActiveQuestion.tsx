@@ -2,38 +2,33 @@
 
 import cls from 'clsx';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import { Question } from '@/src/models';
 import styles from './ActiveQuestion.module.css';
-import { delay } from '@/src/utils/common';
-import { fetchSetActiveQuestionId, fetchSetFinalScore } from '@/src/api/api';
-import { customRevalidatePath, customRevalidateTag } from '@/src/api/actions';
+import { delay } from '@/src/utils/common.utils';
 import {
   getCorrectAnswerIndexes,
   getNextQuestionId,
-} from '@/src/components/ActiveQuestions/utils';
+  getCurrentScore,
+} from './utils';
 
 const ABC = ['A', 'B', 'C', 'D'];
 const DELAY = 200;
 
 interface Props {
-  activeQuestionId: number;
   questions: Question[];
-  isShowQuestion: boolean;
-  setActiveQuestion: (id: number) => void;
 }
 
 export default function ActiveQuestion(props: Props) {
-  const {
-    activeQuestionId,
-    questions,
-    isShowQuestion,
-    setActiveQuestion: setActiveQuestionId,
-  } = props;
+  const { questions } = props;
+  const searchParams = useSearchParams();
   const router = useRouter();
   const [correctIndex, setCorrectIndex] = useState<number[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number | undefined>();
   const [wrongIndex, setWrongIndex] = useState<number | undefined>();
+
+  const activeQuestionId = Number(searchParams.get('questionId')) || questions[0].id;
   const activeQuestion = questions.find((q) => q.id === activeQuestionId);
 
   useEffect(() => {
@@ -42,14 +37,14 @@ export default function ActiveQuestion(props: Props) {
     setWrongIndex(undefined);
   }, [activeQuestionId]);
 
-  const gameOver = () => {
-    customRevalidatePath('/game-over');
-    customRevalidateTag('activeQuestionId');
-    router.push('/game-over');
+  const gameOver = (score: number) => {
+    router.push(`/game-over?score=${score}`);
   };
 
   const handleClick = async (answer: string, index: number) => {
     if (selectedIndex !== undefined || activeQuestion === undefined) return;
+    const currentScore = getCurrentScore(questions, activeQuestionId);
+    const params = new URLSearchParams(searchParams);
 
     const { answers, score, options } = activeQuestion;
 
@@ -61,32 +56,34 @@ export default function ActiveQuestion(props: Props) {
       const nextQuestionId = getNextQuestionId(questions, activeQuestionId);
       setCorrectIndex(correctIndexes);
 
-      await fetchSetFinalScore(score);
-
+      await delay(DELAY);
       if (nextQuestionId === null) {
-        await delay(DELAY);
-        gameOver();
+        gameOver(score);
       } else {
-        await fetchSetActiveQuestionId(nextQuestionId);
-        await delay(DELAY);
-        setActiveQuestionId(nextQuestionId);
+        params.set('questionId', nextQuestionId.toString());
+        router.push(`/game?${params.toString()}`);
       }
     } else {
       setWrongIndex(index);
       await delay(DELAY);
-      gameOver();
+      gameOver(currentScore);
     }
   };
 
   if (activeQuestion === undefined) {
-    return <div>No question</div>;
+    return (
+      <div className={styles['not-found']}>
+        <h2>Question not found</h2>
+        <Link href="/game">reset game</Link>
+      </div>
+    );
   }
 
   const { options, question } = activeQuestion;
   return (
     <div
       className={cls(styles.container, {
-        [styles.hide]: !isShowQuestion,
+        [styles.hide]: searchParams.get('showQuestion') === 'false',
       })}
     >
       <div className={styles.question}>{question}</div>

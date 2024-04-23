@@ -1,28 +1,20 @@
-'use client';
-
-import { Dispatch, SetStateAction } from 'react';
+import Link from 'next/link';
 import styles from './Header.module.css';
 
 interface Props {
-  isShowQuestion: boolean;
-  setIsShowQuestion: Dispatch<SetStateAction<boolean>>;
+  showQuestion: string | undefined;
 }
 
 export default function MobileHeader(props: Props) {
-  const { isShowQuestion, setIsShowQuestion } = props;
-
-  const handleClick = () => {
-    setIsShowQuestion((value) => !value);
-  };
-
+  const { showQuestion = 'true' } = props;
   return (
     <header className={styles['mobile-header']}>
-      <div
-        role="button"
-        tabIndex={0}
-        className={isShowQuestion ? styles.burger : styles.close}
-        onClick={handleClick}
-        onKeyDown={handleClick}
+      <Link
+        href={{
+          pathname: '/game',
+          query: { showQuestion: showQuestion === 'true' ? 'false' : 'true' },
+        }}
+        className={showQuestion === 'true' ? styles.burger : styles.close}
       />
     </header>
   );
