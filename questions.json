@@ -3,12 +3,12 @@
     "id": 1,
     "question": "How old your elder brother was 10 years before you was born, mate?",
     "options": [
-      "Paris wdjlk kalj ajdkla jd lajdl ldjaslkjdlkasjd jlkj",
       "Paris",
-      "Berlin",
+      "Tate",
+      "London",
       "Berlin"
     ],
-    "answers": ["Paris wdjlk kalj ajdkla jd lajdl ldjaslkjdlkasjd jlkj"],
+    "answers": ["Paris"],
     "score": 500
   },
   {
@@ -20,13 +20,15 @@
       "Mark Twain",
       "J.K. Rowling"
     ],
-    "answers": ["Harper Lee", "J.K. Rowling"]
+    "answers": ["Harper Lee", "J.K. Rowling"],
+    "score": 1000
   },
   {
     "id": 3,
     "question": "Which planet is known as the Red Planet?",
     "options": ["Venus", "Mars", "Jupiter", "Mercury"],
-    "answers": ["Mars"]
+    "answers": ["Mars"],
+    "score": 2000
   },
   {
     "id": 4,
