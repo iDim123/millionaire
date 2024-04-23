@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import ScoreList from '@/src/components/ScoreList/ScoreList';
+import QuestionsList from '@/src/components/QuestionsList/QuestionsList';
 import ActiveQuestion from '@/src/components/ActiveQuestions/ActiveQuestion';
 import styles from './page.module.css';
 import { fetchGetActiveQuestionId, fetchQuestions } from '@/src/api/api';
@@ -42,7 +42,7 @@ export default function Game() {
             questions={questions}
             setActiveQuestion={setActiveQuestionId}
           />
-          <ScoreList
+          <QuestionsList
             isShowQuestion={isShowQuestion}
             activeQuestionId={activeQuestionId}
             questions={questions}

@@ -1,6 +1,6 @@
 import cls from 'clsx';
 import styles from './ScoreList.module.css';
-import ListItem from '@/src/components/ScoreList/ListItem';
+import ListItem from '@/src/components/QuestionsList/ListItem';
 import { Question } from '@/src/models';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
   isShowQuestion: boolean;
 }
 
-export default function ScoreList(props: Props) {
+export default function QuestionsList(props: Props) {
   const { activeQuestionId, questions, isShowQuestion } = props;
 
   const activeQuestionIdIndex = activeQuestionId === undefined
