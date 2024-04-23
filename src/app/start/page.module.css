@@ -24,6 +24,7 @@
   align-self: center;
   display: flex;
   flex-direction: column;
+  row-gap: 20px;
 }
 
 .img {
@@ -56,6 +57,7 @@
   .content {
     align-self: auto;
     justify-content: space-between;
+    row-gap: 0px;
   }
   .content h1 {
     text-align: center;
