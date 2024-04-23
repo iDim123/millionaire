@@ -1,5 +1,5 @@
 import cls from 'clsx';
-import styles from './ScoreList.module.css';
+import styles from './QuestionsList.module.css';
 import ListItem from '@/src/components/QuestionsList/ListItem';
 import { Question } from '@/src/models';
 
