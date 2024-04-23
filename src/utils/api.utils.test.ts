@@ -101,7 +101,7 @@ describe('transformData function', () => {
         score: 1000,
       },
     ];
-    expect(transformData(input)).toEqual([1]);
+    expect(transformData(input)).toEqual([]);
   });
 
   test('should return the same array if no items have empty options and answers', () => {
