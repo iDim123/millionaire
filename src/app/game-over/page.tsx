@@ -2,10 +2,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import cls from 'clsx';
 import styles from './page.module.css';
-import { fetchGetFinalScore } from '@/src/api/api';
+import { fetchFinalScore } from '@/src/lib/data';
 
 export default async function GameOver() {
-  const score = await fetchGetFinalScore();
+  const score = await fetchFinalScore() || 0;
 
   return (
     <main className={styles['page-container']}>

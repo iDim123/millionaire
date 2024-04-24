@@ -25,3 +25,15 @@ export function getNextQuestionId(
   }
   return questions[index + 1].id;
 }
+
+export function getCurrentScore(
+  questions: Question[],
+  activeQuestionId: number,
+): number {
+  const index = questions.findIndex((q) => q.id === activeQuestionId);
+
+  if (index === -1 || index === 0) {
+    return 0;
+  }
+  return questions[index - 1].score;
+}

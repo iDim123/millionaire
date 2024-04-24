@@ -3,6 +3,8 @@ const questions = require('../src/lib/questions.json');
 
 async function seedQuestions(client) {
   try {
+    await client.sql`DROP TABLE IF EXISTS questions;`;
+
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
     const createTable = await client.sql`
@@ -37,6 +39,8 @@ async function seedQuestions(client) {
 
 async function seedActiveQuestionId(client) {
   try {
+    await client.sql`DROP TABLE IF EXISTS active_question;`;
+
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
     const createTable = await client.sql`
@@ -61,6 +65,8 @@ async function seedActiveQuestionId(client) {
 
 async function seedFinalScore(client) {
   try {
+    await client.sql`DROP TABLE IF EXISTS score;`;
+
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
     const createTable = await client.sql`

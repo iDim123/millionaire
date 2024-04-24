@@ -1,7 +1,7 @@
 import cls from 'clsx';
 import { memo } from 'react';
-import { formatNumberWithCommas } from '@/src/utils/common';
-import styles from './ScoreList.module.css';
+import { formatNumberWithCommas } from '@/src/utils/common.utils';
+import styles from './QuestionsList.module.css';
 
 interface Props {
   active: boolean;

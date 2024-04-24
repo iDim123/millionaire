@@ -1,8 +1,8 @@
 [
   {
     "id": 1,
-    "question": "How old your elder brother was 10 years before you was born, mate?",
-    "options": ["Paris", "Paris", "Berlin", "Berlin"],
+    "question": "What is the capital of France?",
+    "options": ["Paris", "Tate", "London", "Berlin"],
     "answers": ["Paris"],
     "score": 500
   },

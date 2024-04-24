@@ -1,7 +1,7 @@
 import { sql } from '@vercel/postgres';
 import { unstable_noStore as noStore } from 'next/cache';
 import { Question } from '@/src/models';
-import { transformData } from '@/src/utils/api';
+import { transformData } from '@/src/utils/api.utils';
 
 export async function fetchQuestions() {
   noStore();

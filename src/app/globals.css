@@ -51,6 +51,13 @@ h1 {
   background-color: var(--btn-active-color);
 }
 
+.loading-page { 
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @media screen and (max-width: 768px) {
   .btn {
     min-width: 288px;

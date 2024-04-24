@@ -2,38 +2,34 @@
 
 import cls from 'clsx';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import { Question } from '@/src/models';
 import styles from './ActiveQuestion.module.css';
-import { delay } from '@/src/utils/common';
-import { fetchSetActiveQuestionId, fetchSetFinalScore } from '@/src/api/api';
-import { customRevalidatePath, customRevalidateTag } from '@/src/api/actions';
-import {
-  getCorrectAnswerIndexes,
-  getNextQuestionId,
-} from '@/src/components/ActiveQuestions/utils';
-import { setActiveQuestionId } from '@/src/lib/actions';
+import { getCorrectAnswerIndexes, getNextQuestionId } from './utils';
+import { delay } from '@/src/utils/common.utils';
 
 const ABC = ['A', 'B', 'C', 'D'];
 const DELAY = 200;
 
 interface Props {
-  activeQuestionId: number;
   questions: Question[];
-  isShowQuestion: boolean;
+  questionId: number | undefined;
+  setActiveQuestionId: (id: number) => void;
+  setFinalScore: (score: number) => void;
 }
 
 export default function ActiveQuestion(props: Props) {
   const {
-    activeQuestionId,
-    questions,
-    isShowQuestion,
-    // setActiveQuestion: setActiveQuestionId,
+    questions, questionId, setActiveQuestionId, setFinalScore,
   } = props;
+  const searchParams = useSearchParams();
   const router = useRouter();
   const [correctIndex, setCorrectIndex] = useState<number[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number | undefined>();
   const [wrongIndex, setWrongIndex] = useState<number | undefined>();
+
+  const activeQuestionId = questionId || questions[0].id;
   const activeQuestion = questions.find((q) => q.id === activeQuestionId);
 
   useEffect(() => {
@@ -43,8 +39,6 @@ export default function ActiveQuestion(props: Props) {
   }, [activeQuestionId]);
 
   const gameOver = () => {
-    customRevalidatePath('/game-over');
-    customRevalidateTag('activeQuestionId');
     router.push('/game-over');
   };
 
@@ -60,17 +54,14 @@ export default function ActiveQuestion(props: Props) {
       const correctIndexes = getCorrectAnswerIndexes(options, answers);
       const nextQuestionId = getNextQuestionId(questions, activeQuestionId);
       setCorrectIndex(correctIndexes);
+      setFinalScore(score);
 
-      await fetchSetFinalScore(score);
-
+      await delay(DELAY);
       if (nextQuestionId === null) {
-        await delay(DELAY);
         gameOver();
       } else {
-        await fetchSetActiveQuestionId(nextQuestionId);
-        await delay(DELAY);
-        await setActiveQuestionId(nextQuestionId);
-        // setActiveQuestionId(nextQuestionId);
+        setActiveQuestionId(nextQuestionId);
+        router.push('/game');
       }
     } else {
       setWrongIndex(index);
@@ -80,14 +71,19 @@ export default function ActiveQuestion(props: Props) {
   };
 
   if (activeQuestion === undefined) {
-    return <div>No question</div>;
+    return (
+      <div className={styles['not-found']}>
+        <h2>Question not found</h2>
+        <Link href="/game">reset game</Link>
+      </div>
+    );
   }
 
   const { options, question } = activeQuestion;
   return (
     <div
       className={cls(styles.container, {
-        [styles.hide]: !isShowQuestion,
+        [styles.hide]: searchParams.get('showQuestion') === 'false',
       })}
     >
       <div className={styles.question}>{question}</div>

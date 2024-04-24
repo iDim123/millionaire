@@ -1,11 +1,7 @@
-export type QuestionDraft = {
+export type Question = {
   id: number;
   question: string;
   options: string[];
   answers: string[];
-  score?: number;
-};
-
-export type Question = Omit<QuestionDraft, 'score'> & {
   score: number;
 };

@@ -77,6 +77,13 @@
   -webkit-line-clamp: 2;
 }
 
+.not-found{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 
 @media screen and (max-width: 1246px) {
   .container {
@@ -121,7 +128,7 @@
     line-height: 20.88px;
     text-align: center;
     align-content: center;
-    margin: var(--mobile-height) 50px 0 50px;
+    margin: var(--mobile-header-height) 50px 0 50px;
     overflow: initial;
   }
   .answers {
@@ -145,6 +152,6 @@
 
 @media screen and (max-width: 468px) {
   .question {
-    margin: var(--mobile-height) var(--mobile-x-margin) 0 var(--mobile-x-margin);
+    margin: var(--mobile-header-height) var(--mobile-x-margin) 0 var(--mobile-x-margin);
   }
 }

@@ -1,52 +1,35 @@
-import ScoreList from '@/src/components/ScoreList/ScoreList';
-import ActiveQuestion from '@/src/components/ActiveQuestions/ActiveQuestion';
+import MobileHeader from '@/src/components/Header';
 import styles from './page.module.css';
 import { fetchActiveQuestionId, fetchQuestions } from '@/src/lib/data';
+import ActiveQuestion from '@/src/components/ActiveQuestion/ActiveQuestion';
+import QuestionsList from '@/src/components/QuestionsList/QuestionsList';
+import { setActiveQuestionId, setFinalScore } from '@/src/lib/actions';
 
-export default async function Game() {
+interface Props {
+  searchParams: {
+    showQuestion: string | undefined;
+  };
+}
+
+export default async function Game(props: Props) {
+  const { searchParams } = props;
   const questions = await fetchQuestions();
-  const activeQuestionId = await fetchActiveQuestionId();
-  // const [isShowQuestion, setIsShowQuestion] = useState(true);
-  // const [activeQuestionId, setActiveQuestionId] = useState<
-  //   number | undefined
-  // >();
-  // const [questions, setQuestions] = useState<Question[]>([]);
-  // const [isLoading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   // Promise.all([fetchQuestions(), fetchGetActiveQuestionId()]).then(
-  //     Promise.all([fetchQuestions(), fetchActiveQuestionId()]).then(
-  //     ([data, id]) => {
-  //       setQuestions(data);
-  //       setActiveQuestionId(id);
-  //       setLoading(false);
-  //     },
-  //   );
-  // }, []);
+  const questionId = await fetchActiveQuestionId();
 
   return (
     <main className={styles.container}>
-      {/* <MobileHeader
-        isShowQuestion={isShowQuestion}
-        setIsShowQuestion={setIsShowQuestion}
-      /> */}
-      {/* {isLoading && <div>Loading...</div>} */}
-      {activeQuestionId !== undefined && (
-        <>
-          <ActiveQuestion
-            isShowQuestion
-            activeQuestionId={activeQuestionId}
-            questions={questions}
-            // setActiveQuestion={setActiveQuestionId}
-          />
-          <ScoreList
-            isShowQuestion
-            activeQuestionId={activeQuestionId}
-            questions={questions}
-          />
-        </>
-      )}
+      <MobileHeader showQuestion={searchParams.showQuestion} />
+      <ActiveQuestion
+        questionId={questionId}
+        questions={questions}
+        setFinalScore={setFinalScore}
+        setActiveQuestionId={setActiveQuestionId}
+      />
+      <QuestionsList
+        searchParams={searchParams}
+        questionId={questionId}
+        questions={questions}
+      />
     </main>
   );
 }
