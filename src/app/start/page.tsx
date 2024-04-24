@@ -2,8 +2,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import cls from 'clsx';
 import styles from './page.module.css';
+import { resetGame } from '@/src/actions/actions';
 
 export default async function Start() {
+  await resetGame();
+
   return (
     <main className={styles['page-container']}>
       <div className={styles.container}>

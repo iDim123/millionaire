@@ -2,16 +2,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import cls from 'clsx';
 import styles from './page.module.css';
+import { getFinalScore } from '@/src/actions/actions';
 
-interface Props {
-  searchParams: { score: string };
-}
-
-export default async function GameOver(props: Props) {
-  const {
-    searchParams: { score },
-  } = props;
-  const finalScore = Number.isNaN(Number(score)) || score === '' ? 0 : score;
+export default async function GameOver() {
+  const finalScore = await getFinalScore() || 0;
 
   return (
     <main className={styles['page-container']}>

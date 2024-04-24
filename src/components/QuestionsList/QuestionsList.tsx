@@ -5,15 +5,15 @@ import { Question } from '@/src/models';
 
 interface Props {
   questions: Question[];
+  questionId: number | undefined;
   searchParams: {
-    questionId: string | undefined;
     showQuestion: string | undefined;
   };
 }
 
 export default function QuestionsList(props: Props) {
-  const { searchParams, questions } = props;
-  const activeQuestionId = Number(searchParams.questionId) || questions[0].id;
+  const { searchParams, questions, questionId } = props;
+  const activeQuestionId = questionId || questions[0].id;
 
   const activeQuestionIdIndex = activeQuestionId === undefined
     ? 0

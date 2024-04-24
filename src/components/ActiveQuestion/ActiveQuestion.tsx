@@ -10,7 +10,6 @@ import { delay } from '@/src/utils/common.utils';
 import {
   getCorrectAnswerIndexes,
   getNextQuestionId,
-  getCurrentScore,
 } from './utils';
 
 const ABC = ['A', 'B', 'C', 'D'];
@@ -18,17 +17,22 @@ const DELAY = 200;
 
 interface Props {
   questions: Question[];
+  questionId: number | undefined;
+  setActiveQuestionId: (id: number) => void;
+  setFinalScore: (score: number) => void;
 }
 
 export default function ActiveQuestion(props: Props) {
-  const { questions } = props;
+  const {
+    questions, questionId, setActiveQuestionId, setFinalScore,
+  } = props;
   const searchParams = useSearchParams();
   const router = useRouter();
   const [correctIndex, setCorrectIndex] = useState<number[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number | undefined>();
   const [wrongIndex, setWrongIndex] = useState<number | undefined>();
 
-  const activeQuestionId = Number(searchParams.get('questionId')) || questions[0].id;
+  const activeQuestionId = questionId || questions[0].id;
   const activeQuestion = questions.find((q) => q.id === activeQuestionId);
 
   useEffect(() => {
@@ -37,14 +41,12 @@ export default function ActiveQuestion(props: Props) {
     setWrongIndex(undefined);
   }, [activeQuestionId]);
 
-  const gameOver = (score: number) => {
-    router.push(`/game-over?score=${score}`);
+  const gameOver = () => {
+    router.push('/game-over');
   };
 
   const handleClick = async (answer: string, index: number) => {
     if (selectedIndex !== undefined || activeQuestion === undefined) return;
-    const currentScore = getCurrentScore(questions, activeQuestionId);
-    const params = new URLSearchParams(searchParams);
 
     const { answers, score, options } = activeQuestion;
 
@@ -55,18 +57,19 @@ export default function ActiveQuestion(props: Props) {
       const correctIndexes = getCorrectAnswerIndexes(options, answers);
       const nextQuestionId = getNextQuestionId(questions, activeQuestionId);
       setCorrectIndex(correctIndexes);
+      setFinalScore(score);
 
       await delay(DELAY);
       if (nextQuestionId === null) {
-        gameOver(score);
+        gameOver();
       } else {
-        params.set('questionId', nextQuestionId.toString());
-        router.push(`/game?${params.toString()}`);
+        setActiveQuestionId(nextQuestionId);
+        router.push('/game');
       }
     } else {
       setWrongIndex(index);
       await delay(DELAY);
-      gameOver(currentScore);
+      gameOver();
     }
   };
 

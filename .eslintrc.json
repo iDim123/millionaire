@@ -47,5 +47,8 @@
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     }
+  },
+  "globals": {
+    "prismaGlobal": "writable"
   }
 }
