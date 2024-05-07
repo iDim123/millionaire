@@ -1,17 +1,13 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import cls from 'clsx';
 import styles from './page.module.css';
+import { useStore } from '@/src/store/store';
 
-interface Props {
-  searchParams: { score: string };
-}
-
-export default async function GameOver(props: Props) {
-  const {
-    searchParams: { score },
-  } = props;
-  const finalScore = Number.isNaN(Number(score)) || score === '' ? 0 : score;
+export default function GameOver() {
+  const { finalScore } = useStore();
 
   return (
     <main className={styles['page-container']}>
@@ -29,7 +25,7 @@ export default async function GameOver(props: Props) {
             <p>Total score:</p>
             <h1>
               $
-              {`${finalScore} earned`}
+              {`${finalScore || 0} earned`}
             </h1>
           </div>
           <Link className={cls('btn', styles.btn)} href="/start">

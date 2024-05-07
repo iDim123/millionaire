@@ -6,20 +6,21 @@ import { fetchQuestions } from '@/src/api/api';
 
 interface Props {
   searchParams: {
-    questionId: string | undefined;
     showQuestion: string | undefined;
   };
 }
 
 export default async function Game(props: Props) {
-  const { searchParams } = props;
+  const {
+    searchParams: { showQuestion },
+  } = props;
   const questions = await fetchQuestions();
 
   return (
     <main className={styles.container}>
-      <MobileHeader showQuestion={searchParams.showQuestion} />
+      <MobileHeader showQuestion={showQuestion} />
       <ActiveQuestion questions={questions} />
-      <QuestionsList questions={questions} searchParams={searchParams} />
+      <QuestionsList questions={questions} showQuestion={showQuestion} />
     </main>
   );
 }

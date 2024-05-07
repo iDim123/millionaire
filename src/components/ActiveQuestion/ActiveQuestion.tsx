@@ -1,7 +1,7 @@
 'use client';
 
 import cls from 'clsx';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Question } from '@/src/models';
@@ -12,6 +12,7 @@ import {
   getNextQuestionId,
   getCurrentScore,
 } from './utils';
+import { useStore } from '@/src/store/store';
 
 const ABC = ['A', 'B', 'C', 'D'];
 const DELAY = 200;
@@ -24,12 +25,24 @@ export default function ActiveQuestion(props: Props) {
   const { questions } = props;
   const searchParams = useSearchParams();
   const router = useRouter();
+  const {
+    activeQuestionId: id,
+    setActiveQuestionId,
+    setFinalScore,
+    resetGame,
+  } = useStore();
   const [correctIndex, setCorrectIndex] = useState<number[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number | undefined>();
   const [wrongIndex, setWrongIndex] = useState<number | undefined>();
 
-  const activeQuestionId = Number(searchParams.get('questionId')) || questions[0].id;
+  const activeQuestionId = id || questions[0].id;
   const activeQuestion = questions.find((q) => q.id === activeQuestionId);
+
+  const memoResetGame = useCallback(resetGame, []);
+
+  useEffect(() => {
+    memoResetGame();
+  }, [memoResetGame]);
 
   useEffect(() => {
     setCorrectIndex([]);
@@ -38,13 +51,14 @@ export default function ActiveQuestion(props: Props) {
   }, [activeQuestionId]);
 
   const gameOver = (score: number) => {
-    router.push(`/game-over?score=${score}`);
+    setActiveQuestionId(null);
+    setFinalScore(score);
+    router.push('/game-over');
   };
 
   const handleClick = async (answer: string, index: number) => {
     if (selectedIndex !== undefined || activeQuestion === undefined) return;
     const currentScore = getCurrentScore(questions, activeQuestionId);
-    const params = new URLSearchParams(searchParams);
 
     const { answers, score, options } = activeQuestion;
 
@@ -60,8 +74,7 @@ export default function ActiveQuestion(props: Props) {
       if (nextQuestionId === null) {
         gameOver(score);
       } else {
-        params.set('questionId', nextQuestionId.toString());
-        router.push(`/game?${params.toString()}`);
+        setActiveQuestionId(nextQuestionId);
       }
     } else {
       setWrongIndex(index);
